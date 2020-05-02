@@ -14,7 +14,7 @@
 
 # ## _Setup_ geral
 
-# In[4]:
+# In[95]:
 
 
 import pandas as pd
@@ -25,10 +25,10 @@ import seaborn as sns
 from statsmodels.distributions.empirical_distribution import ECDF
 
 
-# In[5]:
+# In[44]:
 
 
-get_ipython().run_line_magic('matplotlib', 'inline')
+#%matplotlib inline
 
 from IPython.core.pylabtools import figsize
 
@@ -42,7 +42,7 @@ sns.set()
 
 # ### _Setup_ da parte 1
 
-# In[4]:
+# In[45]:
 
 
 np.random.seed(42)
@@ -53,201 +53,10 @@ dataframe = pd.DataFrame({"normal": sct.norm.rvs(20, 4, size=10000),
 
 # ## Inicie sua análise a partir da parte 1 a partir daqui
 
-# ### Questão 1
+# In[ ]:
 
-# In[9]:
 
 
-dataframe.describe()
-
-
-# In[14]:
-
-
-# Sua análise da parte 1 começa aqui.
-#dataframe.describe()
-#np.percentile(dataframe.normal, 25)
-
-q1_norm = np.percentile(dataframe.normal, 25)
-q2_norm = np.percentile(dataframe.normal, 50)
-q3_norm = np.percentile(dataframe.normal, 75)
-q1_binom = np.percentile(dataframe.binomial, 25)
-q2_binom = np.percentile(dataframe.binomial, 50)
-q3_binom = np.percentile(dataframe.binomial, 75)
-(round(q1_norm - q1_binom, 3), round(q2_norm - q2_binom, 3), round(q3_norm - q3_binom, 3))
-
-
-# In[12]:
-
-
-(q1_norm - q1_binom, q2_norm - q2_binom, q3_norm - q3_binom)
-
-
-# In[24]:
-
-
-q1_norm = np.percentile(dataframe.normal, 25)
-print(q1_norm)
-print(dataframe.normal.quantile(q=0.25))
-
-
-# ### Questão 2
-
-# In[104]:
-
-
-x = round(np.mean(dataframe.normal), 0)
-s = round(np.std(dataframe.normal), 0)
-print("x = ", x)
-print("s = ", s)
-print("intervalo", [x-s, x+s])
-print("intervalo 2", [x-2*s,x+2*s], "\nintervalo 3",  [x-3*s,x+3*s])
-
-
-# In[88]:
-
-
-norm = sct.norm.rvs(loc=20, scale=4, size=10000) # loc é a média, scale é o desvio padrão. X ~ N(x, s).
-
-sns.distplot(norm);
-
-
-# In[45]:
-
-
-(norm.mean(), norm.var())
-
-
-# In[46]:
-
-
-round(sct.norm.cdf(15, loc=19, scale=4), 3)
-
-
-# In[47]:
-
-
-round(sct.norm.cdf(24, loc=19, scale=4), 3)
-
-
-# In[89]:
-
-
-#P(15 <= x <= 24) == F(24) - F(15) == F(intervalo)
-round(sct.norm.cdf(24, loc=x, scale=s), 3)-round(sct.norm.cdf(15, loc=x, scale=s), 3)
-
-
-# In[97]:
-
-
-round(sct.norm.cdf(24, loc=20, scale=4), 3)-round(sct.norm.cdf(15, loc=20, scale=4), 3)
-
-
-# In[94]:
-
-
-round(sct.norm.cdf(24, loc=20.0, scale=4.0), 3)-round(sct.norm.cdf(15, loc=20.0, scale=4.0), 3)
-
-
-# In[106]:
-
-
-x = np.linspace(0, 20, num=1000)
-
-f = lambda x: sct.norm.cdf(x, loc=20, scale=4)
-
-cdf = f(x)
-
-sns.lineplot(x, cdf);
-
-
-# In[122]:
-
-
-x = np.linspace(0, 20, num=1000)
-
-f = lambda x: sct.norm.pdf(x, loc=20, scale=4)
-
-pdf = f(x)
-
-sns.lineplot(x, pdf);
-
-
-# In[70]:
-
-
-sct.norm.cdf(19, loc=19, scale=4)
-
-
-# In[76]:
-
-
-round(sct.norm.cdf(11, loc=19, scale=4), 3)
-
-
-# In[77]:
-
-
-round(sct.norm.cdf(28, loc=19, scale=4), 3)
-
-
-# In[98]:
-
-
-round(sct.norm.cdf(28, loc=x, scale=s), 3)-round(sct.norm.cdf(11, loc=x, scale=s), 3)
-
-
-# In[99]:
-
-
-round(sct.norm.cdf(32, loc=x, scale=s), 3)-round(sct.norm.cdf(7, loc=x, scale=s), 3)
-
-
-# In[159]:
-
-
-norm = sct.norm.rvs(loc=100, scale=15, size=1000) # loc é a média, scale é o desvio padrão. X ~ N(x, s).
-
-sns.distplot(norm);
-
-
-# In[177]:
-
-
-1-sct.norm.cdf(124, loc=100, scale=15)-sct.norm.cdf(120, loc=100, scale=15)
-
-
-# ### Questão 3
-
-# In[107]:
-
-
-dataframe.describe()
-
-
-# In[124]:
-
-
-dataframe.shape
-
-
-# In[121]:
-
-
-#media
-#variancia
-#diferenca
-
-m_binom = round(np.mean(dataframe.binomial), 3)
-v_binom = round(np.var(dataframe.binomial), 3)
-m_norm = round(np.mean(dataframe.normal), 3)
-v_norm = round(np.var(dataframe.normal), 3)
-print(m_binom)
-#(m_binom - m_norm, v_binom - v_norm)
-print(round(m_binom-m_norm, 3))
-print(round(v_binom-v_norm, 3))
-print(m_binom-m_norm, v_binom-v_norm)
-(round(m_binom-m_norm, 3), round(v_binom-v_norm, 3))
 
 
 # ## Questão 1
@@ -289,9 +98,10 @@ def q2():
     # Retorne aqui o resultado da questão 2.
     #intervalo = [15.977, 24.005]
     #P(15 <= x <= 24) == F(24) - F(15) == F(intervalo)
-    x = round(np.mean(dataframe.normal), 0)
-    s = round(np.std(dataframe.normal), 0)
-    return round(sct.norm.cdf(24, loc=x, scale=s), 3)-round(sct.norm.cdf(15, loc=x, scale=s), 3)
+    x = round(np.mean(dataframe.normal))
+    s = round(np.std(dataframe.normal))
+    #[𝑥¯−𝑠,𝑥¯+𝑠] 
+    return float(round(round(sct.norm.cdf(x+s, loc=x, scale=s), 3)-round(sct.norm.cdf(x-s, loc=x, scale=s), 3),3))
     pass
 
 
@@ -328,7 +138,7 @@ def q3():
 
 # ### _Setup_ da parte 2
 
-# In[6]:
+# In[3]:
 
 
 stars = pd.read_csv("pulsar_stars.csv")
@@ -345,156 +155,107 @@ stars.loc[:, "target"] = stars.target.astype(bool)
 
 # ## Inicie sua análise da parte 2 a partir daqui
 
-# In[7]:
+# In[85]:
+
+
+stars.shape
+
+
+# In[71]:
 
 
 # Sua análise da parte 2 começa aqui.
-stars.head(5)
+
+#coluna filtrada
+star_mean_profile = pd.DataFrame(stars['mean_profile'][stars['target'] == 0])
 
 
-# In[8]:
+# In[86]:
 
 
-stars.describe()
+star_mean_profile.shape
 
 
-# In[205]:
+# In[72]:
 
 
-#filtrando table
-star_mean_profile_table = pd.DataFrame(stars['mean_profile'][stars['target'] == 0])
-star_mean_profile_table_test = star_mean_profile_table.head(20)
-
-
-# In[204]:
-
-
-from sklearn import preprocessing
-
-
-# In[210]:
-
-
-normalized_test=(star_mean_profile_table_test-star_mean_profile_table_test.min())/(star_mean_profile_table_test.max()-star_mean_profile_table_test.min())
-
-
-# In[223]:
-
-
-normalized_test.mean()
-
-
-# In[224]:
-
-
-normalized_test
-
-
-# In[214]:
-
-
-re_escala = preprocessing.StandardScaler().fit(normalized_test)
-res_padronizacao = re_escala.transform(normalized_test) 
-star_mean_profile_table_test_padronizada = pd.DataFrame(res_padronizacao)
-star_mean_profile_table_test_padronizada.columns = ['z_value'] #renomeando a coluna pq no padrao fica 0
-star_mean_profile_table_test_padronizada.mean()
-#qtd_de_um_e_menos = coluna_purchase_padronizada['z_value'].between(-1, 1, inclusive=True).value_counts().iloc[0]
-
-
-# In[215]:
-
-
-star_mean_profile_table_test_padronizada.var()
-
-
-# In[194]:
-
-
+#salvando a media o desvio padrao
 #x = media
 #s = desvio padrao
-x = star_mean_profile_table_test['mean_profile'].mean()
-s = star_mean_profile_table_test['mean_profile'].std()
+x = star_mean_profile.mean()
+s = star_mean_profile.std()
+print(x,"\n", s)
 
 
-# In[195]:
+# In[73]:
 
 
-star_mean_profile_table_test
+false_pulsar_mean_profile_standardized = sct.zscore(star_mean_profile)
 
 
-# In[98]:
+# In[80]:
 
 
-normalized_star_mean_profile_table_test=(star_mean_profile_table_test-star_mean_profile_table_test.min())/(star_mean_profile_table_test.max()-star_mean_profile_table_test.min())
+#test.mean()
+#test.var()
+mean_profile_standardized = pd.DataFrame(false_pulsar_mean_profile_standardized)
 
 
-# In[196]:
+# In[81]:
 
 
-star_mean_profile_table_test['false_pulsar_mean_profile_standardized'] = 0
+mean_profile_standardized
 
 
-# In[197]:
+# In[103]:
 
 
-star_mean_profile_table_test['mean_profile'].iloc[2]
-#star_mean_profile_table_test.loc[0,'z'] = 2
-#star_mean_profile_table_test.loc[3, 'z']
+round(mean_profile_standardized.var())
 
 
-# In[198]:
+# In[109]:
 
 
-star_mean_profile_table_test
+round(mean_profile_standardized.std())
 
 
-# In[199]:
+# In[108]:
 
 
-lista=[]
+round(mean_profile_standardized.mean())
 
-
-# In[200]:
-
-
-#padronizando
-#z_i = (x_i + X) / s
-    
-for i in star_mean_profile_table_test.index:
-    x_i = star_mean_profile_table_test.mean_profile.loc[[i]]
-    z_i = ((x_i+x)/s)
-    #lista.append(z_i)
-    #z.append(z_i)
-    #print(zi)
-    #SALVANDO NA COLUNA z
-    star_mean_profile_table_test.z.loc[[i]] = z_i
-#print(lista)
-
-
-# In[201]:
-
-
-star_mean_profile_table_test
-
-
-# In[202]:
-
-
-star_mean_profile_table_test.mean()
-
-
-# In[203]:
-
-
-star_mean_profile_table_test.var()
-
-
-# ### Resolucao Q4
 
 # In[ ]:
 
 
+#print(dataframe.normal.quantile(q=0.25))
 
+
+# In[96]:
+
+
+from scipy.stats import norm
+
+
+# In[135]:
+
+
+vals = norm.ppf([0.80, 0.90, 0.95])
+print(vals)
+
+
+q1 = round(sct.norm.ppf(0.80, loc=0, scale=1), 3) # loc = media, scale = desvio padrão
+q2 = round(sct.norm.ppf(0.90, loc=0, scale=1), 3)
+q3 = round(sct.norm.ppf(0.95, loc=0, scale=1), 3)
+
+#print(q1,q2,q3)
+
+#print(sct.norm.ppf(q1, loc=0, scale=1))
+#print(sct.norm.ppf(q2, loc=0, scale=1))
+#print(sct.norm.ppf(q3, loc=0, scale=1))
+#print(sct.norm.isf(q1, loc=0, scale=1))
+
+[round(sct.norm.isf(q1, loc=0, scale=1), 3), round(sct.norm.isf(q2, loc=0, scale=1), 3), round(sct.norm.isf(q3, loc=0, scale=1), 3)]
 
 
 # ## Questão 4
@@ -515,6 +276,11 @@ star_mean_profile_table_test.var()
 
 def q4():
     # Retorne aqui o resultado da questão 4.
+    q1 = round(sct.norm.ppf(0.80, loc=0, scale=1), 3) # loc = media, scale = desvio padrão
+    q2 = round(sct.norm.ppf(0.90, loc=0, scale=1), 3)
+    q3 = round(sct.norm.ppf(0.95, loc=0, scale=1), 3)
+
+    return [round(sct.norm.isf(q1, loc=0, scale=1), 3), round(sct.norm.isf(q2, loc=0, scale=1), 3), round(sct.norm.isf(q3, loc=0, scale=1), 3)]
     pass
 
 
