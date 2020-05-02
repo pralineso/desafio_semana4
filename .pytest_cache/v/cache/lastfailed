@@ -1,5 +1,3 @@
 {
-  "test_main.py::test_q5": true,
-  "test_submit.py::test_q4": true,
-  "test_submit.py::test_q5": true
+  "test_submit.py::test_q4": true
 }

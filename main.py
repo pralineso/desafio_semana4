@@ -14,7 +14,7 @@
 
 # ## _Setup_ geral
 
-# In[3]:
+# In[84]:
 
 
 import pandas as pd
@@ -25,7 +25,7 @@ import seaborn as sns
 from statsmodels.distributions.empirical_distribution import ECDF
 
 
-# In[4]:
+# In[85]:
 
 
 #%matplotlib inline
@@ -76,11 +76,7 @@ def q1():
     q1_binom = np.percentile(dataframe.binomial, 25)
     q2_binom = np.percentile(dataframe.binomial, 50)
     q3_binom = np.percentile(dataframe.binomial, 75)
-    d1 = float(round(q1_norm - q1_binom, 3))
-    d2 = float(round(q2_norm - q2_binom, 3))
-    d3 = float(round(q3_norm - q3_binom, 3))
-    #type(d1)
-    return (d1, d2, d3)
+    return (round(q1_norm - q1_binom, 3), round(q2_norm - q2_binom, 3), round(q3_norm - q3_binom, 3))
     pass
 
 
@@ -147,7 +143,7 @@ def q3():
 
 # ### _Setup_ da parte 2
 
-# In[3]:
+# In[4]:
 
 
 stars = pd.read_csv("pulsar_stars.csv")
@@ -164,17 +160,27 @@ stars.loc[:, "target"] = stars.target.astype(bool)
 
 # ## Inicie sua análise da parte 2 a partir daqui
 
-# In[153]:
+# In[34]:
 
 
 # Sua análise da parte 2 começa aqui.
-#q1 = sct.norm.ppf(0.80, loc=0, scale=1) # loc = media, scale = desvio padrão
-#q2 = sct.norm.ppf(0.90, loc=0, scale=1)
-#q3 = sct.norm.ppf(0.95, loc=0, scale=1)
-#print(sct.norm.cdf(q1, loc=2, scale=1), sct.norm.cdf(q2, loc=2, scale=1), sct.norm.cdf(q3, loc=2, scale=1))
 
-#print(sct.norm.cdf(q1, loc=0, scale=1), sct.norm.cdf(q2, loc=0, scale=1), sct.norm.cdf(q3, loc=0, scale=1))
-#print( 0.8999999999999999-0.23624041589411682)
+
+# In[5]:
+
+
+#coluna filtrada
+#false_mean_profile = pd.DataFrame(stars['mean_profile'][stars['target'] == 0])
+
+
+# In[35]:
+
+
+#padronizando
+#false_mean_profile.describe()
+#false_pulsar_mean_profile_standardized = false_mean_profile.apply(lambda x: ((x-116.561250)/17.475456))
+#os valores ali na formula sao os valores da media e do desvio padrao que aparece quando da o .describe()
+#false_pulsar_mean_profile_standardized
 
 
 # ## Questão 4
@@ -190,15 +196,12 @@ stars.loc[:, "target"] = stars.target.astype(bool)
 # 
 # Quais as probabilidade associadas a esses quantis utilizando a CDF empírica da variável `false_pulsar_mean_profile_standardized`? Responda como uma tupla de três elementos arredondados para três casas decimais.
 
-# In[137]:
+# In[118]:
 
 
 def q4():
     # Retorne aqui o resultado da questão 4.
-    q1 = round(sct.norm.ppf(0.80, loc=0, scale=1), 3) # loc = media, scale = desvio padrão
-    q2 = round(sct.norm.ppf(0.90, loc=0, scale=1), 3)
-    q3 = round(sct.norm.ppf(0.95, loc=0, scale=1), 3)
-    return (round(sct.norm.isf(q1, loc=0, scale=1), 3), round(sct.norm.isf(q2, loc=0, scale=1), 3), round(sct.norm.isf(q3, loc=0, scale=1), 3))
+    return (0,0,0)
     pass
 
 
@@ -216,6 +219,14 @@ def q4():
 
 def q5():
     # Retorne aqui o resultado da questão 5.
+    #nao sei pq mas so da certo se isso tiver aqui 
+    false_mean_profile = pd.DataFrame(stars['mean_profile'][stars['target'] == 0])
+    false_pulsar_mean_profile_standardized = false_mean_profile.apply(lambda x: ((x-116.561250)/17.475456))
+    Q1_df = np.quantile(false_pulsar_mean_profile_standardized, .25) 
+    Q2_df = np.quantile(false_pulsar_mean_profile_standardized, .50)
+    Q3_df = np.quantile(false_pulsar_mean_profile_standardized, .75)
+    Q_teoricos2 = sct.norm.ppf([0.25, 0.50, 0.75])
+    return (round(Q1_df-Q_teoricos2[0],3), round(Q2_df-Q_teoricos2[1],3), round(Q3_df-Q_teoricos2[2],3))
     pass
 
 
